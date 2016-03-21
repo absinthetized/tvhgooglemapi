@@ -32,11 +32,13 @@ import com.google.code.javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Enumeration;
+import java.util.Date;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class Drafter {
 
@@ -62,7 +64,8 @@ public class Drafter {
 
         options.addOption(OptionBuilder.withLongOpt("username").hasArg().withArgName("email address").withDescription("Your Google Email adress.").create());
         options.addOption(OptionBuilder.withLongOpt("password").hasArg().withArgName("google password").withDescription("Your Google password (caution: providing this on the commandline can be a security problem).").create());
-
+        options.addOption(OptionBuilder.withLongOpt("hash").hasArg().withArgName("chrome extension generated hash").withDescription("Your Chrome Extension Instance hash.").create());
+        
         options.addOption(OptionBuilder.withLongOpt("subject").withArgName("text").hasArg().withDescription("Subject of the mail").create("s"));
         options.addOption(OptionBuilder.withLongOpt("subjectfile").withArgName("filename").hasArg().withDescription("File containing the subject of the mail (UTF-8)").create());
         options.addOption(OptionBuilder.withLongOpt("attachments").hasArgs().withArgName("filename,filename,...").withValueSeparator(',').withDescription("Attachments").create("a"));
@@ -126,6 +129,10 @@ public class Drafter {
             String password = null;
             if (cmd.hasOption("password")) 
                 password = cmd.getOptionValue("password");
+            
+            String hash = null;
+            if (cmd.hasOption("hash")) 
+                password = cmd.getOptionValue("hash");
                         
             String[] bcc = cmd.getOptionValues("bcc");
             String[] cc = cmd.getOptionValues("cc");
@@ -136,7 +143,7 @@ public class Drafter {
             String[] attachmentnames = cmd.getOptionValues("attachmentnames");
             String[] destinations = cmd.getOptionValues("to");
 
-            Credentials credentials = Authenticater.getValidCredentials(username, password);
+            Credentials credentials = Authenticater.getValidCredentials(username, password, hash);
 
             if (credentials != null) {
                 boolean success = false;
@@ -154,7 +161,7 @@ public class Drafter {
                         success = true;
                     } catch (AuthenticationFailedException e) {
                         JOptionPane.showMessageDialog(null, "Invalid login, please try again!");
-                        credentials = Authenticater.getValidCredentials(username, null);
+                        credentials = Authenticater.getValidCredentials(username, null, null);
                         success = false;
                     }
 
@@ -243,13 +250,20 @@ public class Drafter {
 
             // Create the message
             Message draftMail = new MimeMessage(session);
+            
+            /*inject our special headers*/
+            Long now = new Date().getTime();
+            final String hash = credentials.getHash();
+            draftMail.setHeader("Auto-Submitted", hash + "|" + now.toString());                   
+            //Auto-Submitted	
+                        
             draftMail.setSubject(subjectText);
             Multipart parts = new MimeMultipart();
             BodyPart body = new MimeBodyPart();
 
             if (bodyText.toLowerCase().indexOf("<body") < 0) // rough guess to see if the body is html
             {
-                bodyText = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body>" + StringEscapeUtils.escapeHtml(bodyText).replace("\n", "<br />" +  "\n") + "<br>"
+                bodyText = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body>" + StringEscapeUtils.escapeHtml4(bodyText).replace("\n", "<br />" +  "\n") + "<br>"
                         + "</body></html>";
             }
 
@@ -257,7 +271,7 @@ public class Drafter {
                 StringBuilder b = new StringBuilder(bodyText);
                 if (signature.indexOf("</") < 0) // assume it's  html if there's no </, rough guess
                 {
-                    signature = StringEscapeUtils.escapeHtml(signature);
+                    signature = StringEscapeUtils.escapeHtml4(signature);
                 }
                 b.replace(bodyText.lastIndexOf("</body>"), bodyText.lastIndexOf("</body>") + 7, "<br>" + signature + "</body>");
                 bodyText = b.toString();
@@ -291,7 +305,7 @@ public class Drafter {
                 draftMail.setRecipients(Message.RecipientType.BCC , stringToInternetAddress(bcc));
             draftMail.setFlag(Flags.Flag.SEEN, true);
 
-
+            
             if (sendImmediately) {
                 Transport.send(draftMail);
             } else {
@@ -336,6 +350,13 @@ public class Drafter {
                         folder.fetch(messages, fp);
                         IMAPMessage googleMessage = (IMAPMessage) messages[0];
                         threadId = googleMessage.getGoogleMessageThreadId();
+                        
+                         Enumeration headers = googleMessage.getAllHeaders();
+                        while (headers.hasMoreElements()) {
+                            Header header = (Header) headers.nextElement();
+                            System.out.println(header.getName() + ": " + header.getValue());
+                        }
+                        
                         folder.close(false);
                     }
                 }
@@ -347,7 +368,7 @@ public class Drafter {
                 store.close();
 
                 // Open the message in the default browser
-                Runtime rt = Runtime.getRuntime();
+             /*   Runtime rt = Runtime.getRuntime();
                 String drafturl = "https://mail.google.com/mail/#drafts/" + Long.toHexString(threadId);
                 
                 File chrome = new File("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
@@ -361,7 +382,7 @@ public class Drafter {
                     commandLine[0] = chrome.getPath();
                     commandLine[1] = drafturl;
                     rt.exec(commandLine);
-                }
+                }*/
                 
             } // else branch for sendImmediately
 
