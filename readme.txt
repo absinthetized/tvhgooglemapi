@@ -20,10 +20,6 @@ You can get one here: http://www.oracle.com/technetwork/java/index.html
 Imap is used to upload the mail, so you need to enable IMAP in your gmail 
 settings and imaps trafic has to be allowed on the network (port 993.)
 
-If you're using multiple accounts with gmail the primary logged in account in 
-your browser must be the one you want to use for this application or it won't 
-work.
-
 The application can't determine the signature of the user. If you want to 
 include a signature in the mails created by this application you can put 
 it in the file %USERPROFILE%\.gmaildrafter\signatures\username@domain.com.html
@@ -75,7 +71,7 @@ The sources include a Netbeans Project, but another ide should do just fine.
 The installer is made with innosetup.    
 
 If you have a problem with the application please report them at 
-https://github.com/jankeirse/tvhgooglemapi/issues
+https://github.com/jankeirse/tvhgooglemapi/issues 
 If your problem refers to gmail exit code 1 please create a file in 
 c:\windows\temp\debuggmaildrafter.txt , try to send a mail again and when there 
 is a popup 
@@ -85,4 +81,16 @@ c:\windows\temp\debuggmaildrafter.txt and run the last line in dos
 (Start->execute->cmd.exe)
 It will most likely provide valueable information.
 
-By default tvhgooglemapi will open the draft in a new browser tab/window. If you are using Google Chrome there is an extension that makes sure that only one tab for gmail is open (and also only one for google calendar,...) Using this extension will cause the draft to be opened in the tab where you had gmail open, some people may find that desireable. You can find it here: https://chrome.google.com/webstore/detail/tab-fixer-for-google-apps/cplbkecindmpapmnffepmnbiogpllcni/details It's support page is here: https://code.google.com/p/google-apps-tab-fixer/wiki/FAQ         
+---THIS INFORMATION IS VALID FOR THE ORIGINAL FORKED VERSION AS OF 2016-03-21
+---IT IS INVALIDATED BY THE FORK
+---NEW INFO COMING SOON
+If you're using multiple accounts with gmail the primary logged in account in 
+your browser must be the one you want to use for this application or it won't 
+work.
+By default tvhgooglemapi will open the draft in a new browser tab/window. 
+If you are using Google Chrome there is an extension that makes sure that only 
+one tab for gmail is open (and also only one for google calendar,...) 
+Using this extension will cause the draft to be opened in the tab where you had 
+gmail open, some people may find that desireable. You can find it here: 
+https://chrome.google.com/webstore/detail/tab-fixer-for-google-apps/cplbkecindmpapmnffepmnbiogpllcni/details 
+It's support page is here: https://code.google.com/p/google-apps-tab-fixer/wiki/FAQ         
