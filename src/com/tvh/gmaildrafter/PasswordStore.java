@@ -132,10 +132,10 @@ public class PasswordStore {
         return b;
     }
 
-    public PasswordStore() {
-        propsFolder = System.getProperty("user.home") + "/.gmaildrafter";
-        keyFile = System.getProperty("user.home") + "/.gmaildrafter/key";
-        propsFile = System.getProperty("user.home") + "/.gmaildrafter/props";
+    public PasswordStore(String nickname) {
+        propsFolder = System.getProperty("user.home") + "/.gmaildrafter_" + nickname;
+        keyFile = System.getProperty("user.home") + "/.gmaildrafter_" + nickname + "/key";
+        propsFile = System.getProperty("user.home") + "/.gmaildrafter_" + nickname + "/props";
     }
 
     public void storeLogin(Credentials credentials) {
