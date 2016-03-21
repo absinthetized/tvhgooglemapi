@@ -29,6 +29,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.io.FileUtils;
 
 
 public class PasswordStore {
@@ -184,6 +185,17 @@ public class PasswordStore {
 
         } catch (Exception ex) {
             return null; // credentials not stored
+        }
+
+    }
+    
+    public void deleteStoredLogin() {
+
+        try {
+           FileUtils.deleteDirectory(new File(propsFolder)); 
+
+        } catch (Exception ex) {
+            //return null; // credentials not stored
         }
 
     }
