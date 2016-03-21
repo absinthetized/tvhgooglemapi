@@ -22,11 +22,12 @@ public class Credentials {
 
     private String username;
     private String password;
-    
+    private String hash;
 
-    public Credentials(String username, String password) {
+    public Credentials(String username, String password, String hash) {
         this.username = username;
         this.password = password;
+        this.hash = hash;
 
     }
 
@@ -37,6 +38,10 @@ public class Credentials {
     public String getUsername() {
         return username;
     }
+    
+    public String getHash() {
+        return hash;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -44,5 +49,9 @@ public class Credentials {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+     public void setHash(String hash) {
+        this.hash = hash;
     }
 }
