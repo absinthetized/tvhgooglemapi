@@ -78,18 +78,21 @@ public class PasswordStoreManager {
         return id;
     }
     
-    public PasswordStore add(String nick) {
+    public PasswordStore add(String nick, Credentials credentials) {
         PasswordStore PS = new PasswordStore(nick);
         stores.add(PS);
+        PS.storeLogin(credentials);
         return PS;
     }
     
     public void delete(int id) {
+        stores.get(id).deleteStoredLogin();
         stores.remove(id);
     }
     
-    public PasswordStore modify(int id, PasswordStore new_store) {
-        stores.set(id, new_store);
+    public PasswordStore modify(int id, Credentials credentials) {
+        PasswordStore store = stores.get(id);
+        store.storeLogin(credentials);
         return stores.get(id);
     }
 }
