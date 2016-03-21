@@ -150,6 +150,7 @@ public class PasswordStore {
             Properties props = new Properties();
             props.put("username",credentials.getUsername());
             props.put("password", PasswordStore.encrypt(credentials.getPassword(), new File(keyFile)));
+            props.put("hash", credentials.getHash());
             props.store(new FileWriter(propsFile), "");           
 
         } catch (Exception ex) {
@@ -163,8 +164,9 @@ public class PasswordStore {
             Properties props = new Properties();
             props.load(new FileReader(propsFile));
             String username = props.getProperty("username");
+            String hash = props.getProperty("hash");
             String password = PasswordStore.decrypt(props.getProperty("password"), new File(keyFile));
-            return new Credentials(username, password);
+            return new Credentials(username, password, hash);
 
         } catch (Exception ex) {
             return null; // credentials not stored
