@@ -49,7 +49,7 @@ the given seat__,
 avoid confusion among multiple accounts and/or multiple seats monitoring the same account.
 
 ##Configuration 
-In addition to this code you also need a Java Runtime (at least version 1.6)
+In addition to this code you also need a Java Runtime (at least version 1.8)
 You can get one here: http://www.oracle.com/technetwork/java/index.html  
 
 Imap is used to upload the mail, so you need to enable IMAP in your gmail 
@@ -94,7 +94,7 @@ If this is not the case the program will assume it is plain text and escape all
 html characters, as a result the entire signature would be on a single line in 
 the final mail.
 
-##Builf from source
+##Build from source
 If you want to compile the dll yourself you'll need Microsoft Visual C++ 2010 
 Express Edition 
 (http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express) 
