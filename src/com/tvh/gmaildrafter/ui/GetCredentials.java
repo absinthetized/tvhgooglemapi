@@ -75,11 +75,16 @@ public class GetCredentials extends javax.swing.JDialog {
         jTxtUsername = new javax.swing.JTextField();
         jLblPassword = new javax.swing.JLabel();
         jPassword = new javax.swing.JPasswordField();
-        jChkStore = new javax.swing.JCheckBox();
         jBtnOk = new javax.swing.JButton();
         jBtnCancel = new javax.swing.JButton();
         jLblHash = new javax.swing.JLabel();
         jTxtHash = new javax.swing.JTextField();
+        jButtonSave = new javax.swing.JButton();
+        jCheckBoxAddAccount = new javax.swing.JCheckBox();
+        jLblNick = new javax.swing.JLabel();
+        jTxtNick = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButtonModify = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Provide Google login credentials");
@@ -87,10 +92,12 @@ public class GetCredentials extends javax.swing.JDialog {
         jLblUsername.setLabelFor(jTxtUsername);
         jLblUsername.setText("Email Address");
 
+        jTxtUsername.setEnabled(false);
+
         jLblPassword.setLabelFor(jPassword);
         jLblPassword.setText("Password");
 
-        jChkStore.setText("Remember login");
+        jPassword.setEnabled(false);
 
         jBtnOk.setText("Ok");
         jBtnOk.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +116,32 @@ public class GetCredentials extends javax.swing.JDialog {
         jLblHash.setLabelFor(jTxtHash);
         jLblHash.setText("Hash");
 
+        jTxtHash.setEnabled(false);
+
+        jButtonSave.setText("Save");
+        jButtonSave.setEnabled(false);
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
+
+        jCheckBoxAddAccount.setText("Add new account");
+        jCheckBoxAddAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxAddAccountActionPerformed(evt);
+            }
+        });
+
+        jLblNick.setLabelFor(jTxtUsername);
+        jLblNick.setText("Nickname/reminder");
+
+        jTxtNick.setEnabled(false);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButtonModify.setText("Modify");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,25 +155,43 @@ public class GetCredentials extends javax.swing.JDialog {
                             .addComponent(jLblPassword))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jChkStore)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jTxtUsername)
                             .addComponent(jPassword)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLblHash)
                         .addGap(79, 79, 79)
-                        .addComponent(jTxtHash)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTxtHash)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(jBtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLblNick, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTxtNick))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBoxAddAccount)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonModify, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonModify)
+                    .addComponent(jCheckBoxAddAccount))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLblNick)
+                    .addComponent(jTxtNick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblUsername)
                     .addComponent(jTxtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -152,9 +203,9 @@ public class GetCredentials extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblHash)
                     .addComponent(jTxtHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jChkStore)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSave)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnOk)
                     .addComponent(jBtnCancel))
@@ -182,10 +233,6 @@ public class GetCredentials extends javax.swing.JDialog {
             
         Credentials cred = new Credentials(username, password, hash);
         if (Authenticater.testCredentials(cred)) {
-            if (jChkStore.isSelected()) {
-                PasswordStore store = new PasswordStore();
-                store.storeLogin(cred);
-            }
             this.cred = cred;
             setVisible(false);
         } else {
@@ -199,6 +246,42 @@ public class GetCredentials extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jBtnCancelActionPerformed
 
+    private void jCheckBoxAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAddAccountActionPerformed
+        if (jCheckBoxAddAccount.isSelected()) {
+            jTxtNick.setEnabled(true);
+            jTxtUsername.setEnabled(true);
+            jPassword.setEnabled(true);
+            jTxtHash.setEnabled(true);
+            jButtonSave.setEnabled(true);
+        
+        } else {
+            jTxtNick.setEnabled(false);
+            jTxtUsername.setEnabled(false);
+            jPassword.setEnabled(false);
+            jTxtHash.setEnabled(false);
+            jButtonSave.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBoxAddAccountActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        String username = jTxtUsername.getText();
+        String password = new String(jPassword.getPassword());
+        String hash = new String(jTxtHash.getText());
+        
+        if ("".equals(jTxtUsername.getText()) 
+            || "".equals(new String(jPassword.getPassword()))
+            || "".equals(jTxtNick.getText())
+            || "".equals(jTxtHash.getText())) {
+            JOptionPane.showMessageDialog(null, "Provide nickname, email address, password and hash!");
+            return;
+        }
+            
+        Credentials credential = new Credentials(username, password, hash);
+        PasswordStore store = new PasswordStore(jTxtNick.getText());
+        store.storeLogin(credential);
+        JOptionPane.showMessageDialog(null, "Saved!");
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
     private void centerScreen() {
         Dimension dim = getToolkit().getScreenSize();
         Rectangle abounds = getBounds();
@@ -209,12 +292,17 @@ public class GetCredentials extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnCancel;
     private javax.swing.JButton jBtnOk;
-    private javax.swing.JCheckBox jChkStore;
+    private javax.swing.JButton jButtonModify;
+    private javax.swing.JButton jButtonSave;
+    private javax.swing.JCheckBox jCheckBoxAddAccount;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLblHash;
+    private javax.swing.JLabel jLblNick;
     private javax.swing.JLabel jLblPassword;
     private javax.swing.JLabel jLblUsername;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JTextField jTxtHash;
+    private javax.swing.JTextField jTxtNick;
     private javax.swing.JTextField jTxtUsername;
     // End of variables declaration//GEN-END:variables
 }
