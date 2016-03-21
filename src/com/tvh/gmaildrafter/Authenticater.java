@@ -28,11 +28,11 @@ public  class Authenticater {
     private static GetCredentials getCredentialsInstance;
     private static boolean firstrun = true;
     
-    public static Credentials getValidCredentials(String username, String password ) throws LoginException {
+    public static Credentials getValidCredentials(String username, String password, String hash) throws LoginException {
         boolean thisIsTheFirstRun = firstrun;
         firstrun = false;
         
-        if(username == null || password == null || !thisIsTheFirstRun){
+        if(username == null || password == null || hash == null || !thisIsTheFirstRun){
             
             Credentials cred;
             if(thisIsTheFirstRun) {
@@ -56,12 +56,12 @@ public  class Authenticater {
                 throw new LoginException("Credentials not provided!");
             return cred;
         } else {
-            Credentials cred = new Credentials(username, password);
+            Credentials cred = new Credentials(username, password, hash);
             if (!testCredentials(cred))
                 throw new LoginException("Invalid credentials passed.");
         }
         
-        Credentials credentials = new Credentials(username, password);
+        Credentials credentials = new Credentials(username, password, hash);
         
         return credentials;
     }
