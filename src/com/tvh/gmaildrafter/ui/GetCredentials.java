@@ -78,6 +78,8 @@ public class GetCredentials extends javax.swing.JDialog {
         jChkStore = new javax.swing.JCheckBox();
         jBtnOk = new javax.swing.JButton();
         jBtnCancel = new javax.swing.JButton();
+        jLblHash = new javax.swing.JLabel();
+        jTxtHash = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Provide Google login credentials");
@@ -104,6 +106,9 @@ public class GetCredentials extends javax.swing.JDialog {
             }
         });
 
+        jLblHash.setLabelFor(jTxtHash);
+        jLblHash.setText("Hash");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +130,11 @@ public class GetCredentials extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jBtnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)))
+                        .addComponent(jBtnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLblHash)
+                        .addGap(79, 79, 79)
+                        .addComponent(jTxtHash)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -139,9 +148,13 @@ public class GetCredentials extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblPassword)
                     .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLblHash)
+                    .addComponent(jTxtHash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jChkStore)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnOk)
                     .addComponent(jBtnCancel))
@@ -159,13 +172,15 @@ public class GetCredentials extends javax.swing.JDialog {
         
         String username = jTxtUsername.getText();
         String password = new String(jPassword.getPassword());
+        String hash = new String(jTxtHash.getText());
         
-        if ("".equals(jTxtUsername.getText()) || "".equals(new String(jPassword.getPassword())) ) {
-            JOptionPane.showMessageDialog(null, "Provide email address and password!");
+        if ("".equals(jTxtUsername.getText()) || "".equals(new String(jPassword.getPassword()))
+            || "".equals(jTxtHash.getText())) {
+            JOptionPane.showMessageDialog(null, "Provide email address, password and hash!");
             return;
         }
             
-        Credentials cred = new Credentials(username, password);
+        Credentials cred = new Credentials(username, password, hash);
         if (Authenticater.testCredentials(cred)) {
             if (jChkStore.isSelected()) {
                 PasswordStore store = new PasswordStore();
@@ -195,9 +210,11 @@ public class GetCredentials extends javax.swing.JDialog {
     private javax.swing.JButton jBtnCancel;
     private javax.swing.JButton jBtnOk;
     private javax.swing.JCheckBox jChkStore;
+    private javax.swing.JLabel jLblHash;
     private javax.swing.JLabel jLblPassword;
     private javax.swing.JLabel jLblUsername;
     private javax.swing.JPasswordField jPassword;
+    private javax.swing.JTextField jTxtHash;
     private javax.swing.JTextField jTxtUsername;
     // End of variables declaration//GEN-END:variables
 }
