@@ -62,6 +62,7 @@ public class Drafter {
         body.addOption(OptionBuilder.withLongOpt("body").withArgName("filename").hasArg().withDescription("File containing the body text").create("b"));
         options.addOptionGroup(body);
 
+        options.addOption(OptionBuilder.withLongOpt("nickname").hasArg().withArgName("credentials nickname").withDescription("Used to quickly recall stored account credentials.").create());
         options.addOption(OptionBuilder.withLongOpt("username").hasArg().withArgName("email address").withDescription("Your Google Email adress.").create());
         options.addOption(OptionBuilder.withLongOpt("password").hasArg().withArgName("google password").withDescription("Your Google password (caution: providing this on the commandline can be a security problem).").create());
         options.addOption(OptionBuilder.withLongOpt("hash").hasArg().withArgName("chrome extension generated hash").withDescription("Your Chrome Extension Instance hash.").create());
@@ -122,6 +123,10 @@ public class Drafter {
                     subject.delete();
             }
             
+            String nickname = null;
+            if (cmd.hasOption("nickname")) 
+                nickname = cmd.getOptionValue("nickname");
+            
             String username = null;
             if (cmd.hasOption("username")) 
                 username = cmd.getOptionValue("username");
@@ -143,7 +148,7 @@ public class Drafter {
             String[] attachmentnames = cmd.getOptionValues("attachmentnames");
             String[] destinations = cmd.getOptionValues("to");
 
-            Credentials credentials = Authenticater.getValidCredentials(username, password, hash);
+            Credentials credentials = Authenticater.getValidCredentials(nickname, username, password, hash);
 
             if (credentials != null) {
                 boolean success = false;
@@ -161,7 +166,7 @@ public class Drafter {
                         success = true;
                     } catch (AuthenticationFailedException e) {
                         JOptionPane.showMessageDialog(null, "Invalid login, please try again!");
-                        credentials = Authenticater.getValidCredentials(username, null, null);
+                        credentials = Authenticater.getValidCredentials(null, username, null, null);
                         success = false;
                     }
 

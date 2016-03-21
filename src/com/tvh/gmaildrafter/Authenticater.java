@@ -28,16 +28,16 @@ public  class Authenticater {
     private static GetCredentials getCredentialsInstance;
     private static boolean firstrun = true;
     
-    public static Credentials getValidCredentials(String username, String password, String hash) throws LoginException {
+    public static Credentials getValidCredentials(String nickname, String username, String password, String hash) throws LoginException {
         boolean thisIsTheFirstRun = firstrun;
         firstrun = false;
         
         if(username == null || password == null || hash == null || !thisIsTheFirstRun){
             
             Credentials cred;
-            if(thisIsTheFirstRun) {
+            /*if(thisIsTheFirstRun) {
                 
-                PasswordStore store = new PasswordStore();
+                PasswordStore store = new PasswordStore(nickname);
                 cred = store.getStoredLogin();
                 if (cred!=null){
                     if(testCredentials(cred))
@@ -45,7 +45,7 @@ public  class Authenticater {
                     else if (username == null)
                         username = cred.getUsername(); //password must have changed, so we'll use it as initial for the window
                 }
-            }
+            }*/
             
             if (getCredentialsInstance == null)
                 getCredentialsInstance = new GetCredentials(null, true, username);
@@ -55,15 +55,13 @@ public  class Authenticater {
             if (cred == null)
                 throw new LoginException("Credentials not provided!");
             return cred;
+        
         } else {
             Credentials cred = new Credentials(username, password, hash);
             if (!testCredentials(cred))
                 throw new LoginException("Invalid credentials passed.");
-        }
-        
-        Credentials credentials = new Credentials(username, password, hash);
-        
-        return credentials;
+            return cred;
+        }        
     }
     
     public static boolean testCredentials(Credentials cred){
