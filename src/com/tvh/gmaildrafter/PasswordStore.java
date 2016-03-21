@@ -34,10 +34,11 @@ import javax.crypto.spec.SecretKeySpec;
 public class PasswordStore {
 
     public static final String AES = "AES";
-    private String keyFile;
-    private String propsFile;
-    private String propsFolder;
-    
+    final String keyFile;
+    final String propsFile;
+    final String propsFolder;
+    final String nick;
+        
     /* We hardcode one half of the key in this file and generate one half and put one half in the filesystem to make it at least a little difficult to decode the password */
     /* Notice that this is still insecure, because the .class can be decompiled to find out the salt. */
     private final static String salt = "B9CF54D1B4FD8781"; // This should be a 16 character uppercase HEX string
@@ -133,9 +134,22 @@ public class PasswordStore {
     }
 
     public PasswordStore(String nickname) {
-        propsFolder = System.getProperty("user.home") + "/.gmaildrafter_" + nickname;
-        keyFile = System.getProperty("user.home") + "/.gmaildrafter_" + nickname + "/key";
-        propsFile = System.getProperty("user.home") + "/.gmaildrafter_" + nickname + "/props";
+        nick = nickname;
+        
+        String propsRoot = PasswordStoreManager.propsRoot;
+        propsFolder = propsRoot + nickname;
+        keyFile = propsRoot + nickname + "/key";
+        propsFile = propsRoot + nickname + "/props";
+        
+        File propsFolderReference = new File(propsRoot);
+            if (!propsFolderReference.exists()) {
+                propsFolderReference.mkdir();
+                //what if we have not created the folder?! JUST DIE!!! TBD
+            }
+    }
+    
+    public String get_nick() {
+        return nick;
     }
 
     public void storeLogin(Credentials credentials) {
