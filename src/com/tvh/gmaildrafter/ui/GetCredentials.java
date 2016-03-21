@@ -63,12 +63,16 @@ public class GetCredentials extends javax.swing.JDialog {
         /* TODO: have a look at http://stackoverflow.com/a/596141/1389704 */
         
         PWMan = new PasswordStoreManager();
+        this.update_list();
+    }
+
+    private void update_list() {
         jStoreList.removeAllItems();
         for (int i=0; i< PWMan.get_store_num(); i++) {
             jStoreList.addItem(PWMan.get_store(i).get_nick());
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,6 +155,11 @@ public class GetCredentials extends javax.swing.JDialog {
         jButtonModify.setText("Modify");
 
         jButtonDelete.setText("Delete");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -288,12 +297,21 @@ public class GetCredentials extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Provide nickname, email address, password and hash!");
             return;
         }
-            
+        
         Credentials credential = new Credentials(username, password, hash);
-        PasswordStore store = PWMan.add(jTxtNick.getText());
-        store.storeLogin(credential);
-        JOptionPane.showMessageDialog(null, "Saved!");
+        PasswordStore store = PWMan.add(jTxtNick.getText(), credential);
+        
+        this.update_list();
+        this.jCheckBoxAddAccount.doClick();
     }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        String current_nick = jStoreList.getSelectedItem().toString();
+        if (current_nick.length() > 0) {
+            PWMan.delete(PWMan.get_store_id(current_nick));
+            this.update_list();
+        }
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void centerScreen() {
         Dimension dim = getToolkit().getScreenSize();
