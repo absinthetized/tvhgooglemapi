@@ -323,17 +323,22 @@ public class GetCredentials extends javax.swing.JDialog {
         String username = jTxtUsername.getText();
         String password = new String(jPassword.getPassword());
         String hash = new String(jTxtHash.getText());
+        String nick = new String(jTxtNick.getText());
         
         if ("".equals(jTxtUsername.getText()) 
             || "".equals(new String(jPassword.getPassword()))
             || "".equals(jTxtNick.getText())
             || "".equals(jTxtHash.getText())) {
-            JOptionPane.showMessageDialog(null, "Provide nickname, email address, password and hash!");
+            JOptionPane.showMessageDialog(this, "Provide nickname, email address, password and hash!");
             return;
         }
         
         Credentials credential = new Credentials(username, password, hash);
-        PasswordStore store = PWMan.add(jTxtNick.getText(), credential);
+        int id = PWMan.get_store_id(nick);
+        if (id == -1)        
+            PWMan.add(nick, credential);
+        else
+            PWMan.modify(id, credential);
         
         this.update_list();
         this.setEnableControls(false);
