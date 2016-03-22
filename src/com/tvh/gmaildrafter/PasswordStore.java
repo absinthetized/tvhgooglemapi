@@ -192,6 +192,12 @@ public class PasswordStore {
     public void deleteStoredLogin() {
 
         try {
+           System.gc();
+           File props = new File(propsFile);
+           boolean res = props.delete();                     
+           
+           File key = new File(keyFile);
+           res = key.delete();
            FileUtils.deleteDirectory(new File(propsFolder)); 
 
         } catch (Exception ex) {
