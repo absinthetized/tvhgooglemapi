@@ -30,6 +30,6 @@
 
 // TODO: reference additional headers your program requires here
 
-#include <MAPIDefS.h>
+//#include <MAPIDefs.h>
 #include <MAPI.h>
 #include <WININET.H>
