@@ -1,0 +1,38 @@
+{
+	// must be 2
+	"manifest_version": 2,
+
+	"name": "gmail-draft-monitor",
+	"description": "A test of mines",
+	"version": "0.90.0",
+	
+	//attach this script to the gmail page of the first (u/0) account
+	"content_scripts": [{
+		//we want to match only the FIRST user account of the profile (mail/u/0/)
+		"matches": ["*://mail.google.com/mail/u/0/*"],
+		"js": ["content.js"]
+	}],
+	
+	//entry point for the monitoring code
+	"background": {
+		"page": "bground.html"
+	},
+	
+	//popup to notify current local hash
+	"browser_action" : {
+		"default_icon": "image.png",
+		"default_popup": "popup.html"
+	},
+	
+	//scopes we need to request auth from user
+	"permissions": ["https://www.googleapis.com/auth/gmail.readonly", 
+		"tabs", 
+		"*://mail.google.com/*",
+		"identity.email",
+		"identity",
+		"storage"
+	],
+	
+	//allow loading of javascript from these sites
+	"content_security_policy": "script-src 'self' https://apis.google.com https://ajax.googleapis.com; object-src 'self'"
+}
