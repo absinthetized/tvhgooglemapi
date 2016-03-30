@@ -32,6 +32,13 @@ public class PasswordStoreManager {
    
     public PasswordStoreManager() {
         propsRoot = System.getProperty("user.home") + "/.gmaildrafter/";
+        
+        File propsFolderReference = new File(propsRoot);
+        if (!propsFolderReference.exists()) {
+            propsFolderReference.mkdir();
+            //what if we have not created the folder?! JUST DIE!!! TBD
+        }
+
         stores = new ArrayList<>();
         
         /*loop over all gmaildrafter folders*/
