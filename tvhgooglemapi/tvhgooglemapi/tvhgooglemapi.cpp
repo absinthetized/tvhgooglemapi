@@ -179,19 +179,19 @@ ULONG FAR PASCAL MAPISendMail (LHANDLE lhSession, ULONG ulUIParam, lpMapiMessage
 {
 	ULONG exitCode = MAPI_E_FAILURE ;
    
-	wstring subject;
-	if (lpMessage->lpszSubject != NULL) {
-	     subject = ToWString(lpMessage->lpszSubject);
-		   //subject = L"=?utf-8?Q?" + subject + L"?=";
-	}
-	   else 
-		   subject = L"";
+	wstring subject = L"";
+	//if (lpMessage->lpszSubject != NULL) {
+	//     subject = ToWString(lpMessage->lpszSubject);
+	//	   //subject = L"=?utf-8?Q?" + subject + L"?=";
+	//}
+	//   else 
+	//	   subject = L"";
 	   
-	   wstring body;
-	   if (lpMessage->lpszNoteText != NULL)
+	   wstring body = L"";
+	   /*if (lpMessage->lpszNoteText != NULL)
 			body = ToWString(lpMessage->lpszNoteText);
 	   else
-			body = L"";
+			body = L"";*/
 	   boost::replace_all(subject,"\\","\\\\");
 	   boost::replace_all(subject,"\"","\\\"");
 	   STARTUPINFOA siStartupInfo;
