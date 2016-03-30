@@ -380,12 +380,20 @@ public class GetCredentials extends javax.swing.JDialog {
     }
     
     private void setEnableControls(boolean state) {
+        /*disable/enable form*/
         jTxtNick.setEnabled(state);
         jTxtUsername.setEnabled(state);
         jPassword.setEnabled(state);
         jTxtHash.setEnabled(state);
         jButtonSave.setEnabled(state);
         jButtonCancel.setEnabled(state);
+        
+        /*do opposite on rest of gui*/
+        jBtnOk.setEnabled(!state);
+        jBtnCancel.setEnabled(!state);
+        jButtonModify.setEnabled(!state);
+        jButtonDelete.setEnabled(!state);
+        jStoreList.setEnabled(!state);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
